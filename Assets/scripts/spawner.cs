@@ -6,7 +6,7 @@ public class spawner : MonoBehaviour
 {
     public GameObject enemy_prefab;
     public int num_enemies = 5;
-    int second_between_spawn = 2;
+    float second_between_spawn = 2;
     float enemy_radius;
     int enemies_remaining;
     float timer = 5;
@@ -14,12 +14,15 @@ public class spawner : MonoBehaviour
     {
         enemy_radius = (2 * Mathf.PI) / num_enemies;
         enemies_remaining = num_enemies;
+        second_between_spawn -= Time.deltaTime;
     }
 
     // Update is called once per frame
     void Update()
     {
-        while(num_enemies > 0)
+        
+        
+        while (num_enemies > 0)
         {
             int dist = 2;
             Vector3 offset = new Vector3(Mathf.Cos(enemy_radius * enemies_remaining), 0, Mathf.Sin(enemy_radius * enemies_remaining)) * dist;
@@ -28,5 +31,7 @@ public class spawner : MonoBehaviour
             num_enemies--;
             enemies_remaining--;
         }
+        
+            
     }
 }

@@ -25,6 +25,8 @@ public class bullet : MonoBehaviour
         else if (other.gameObject.tag == "Enemy")
         {
             print("hit an enemy");
+            GameObject.Destroy(other.gameObject);
+            GameObject.Destroy(gameObject);
         }
         else
         {
