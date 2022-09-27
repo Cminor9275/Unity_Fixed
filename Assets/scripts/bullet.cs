@@ -22,9 +22,13 @@ public class bullet : MonoBehaviour
         {
             print("ignore because player");
         }
+        else if (other.gameObject.tag == "Enemy")
+        {
+            print("hit an enemy");
+        }
         else
         {
-            print("I hit: " +other.gameObject.name);
+            print("I hit: " + other.gameObject.name);
             GameObject.Destroy(gameObject);
         }
         
