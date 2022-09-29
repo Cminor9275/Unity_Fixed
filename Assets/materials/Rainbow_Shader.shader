@@ -7,7 +7,7 @@ Shader "Custom/NewSurfaceShader"
         _Glossiness ("Smoothness", Range(0,1)) = 0.5
         _Metallic ("Metallic", Range(0,1)) = 0.0
         _TimeScaler ("Time Scaler", Range(0,20)) = 1.0
-        _xScaler ("XScalar", Range(0.1,3)) = 1.0
+        _XScaler ("XScalar", Range(0.1,3)) = 1.0
     }
     SubShader
     {
@@ -44,7 +44,7 @@ Shader "Custom/NewSurfaceShader"
         void surf (Input IN, inout SurfaceOutputStandard o)
         {
             // Albedo comes from a texture tinted by color
-            float2 uv = { IN.uv_MainTex.x + _Time.y, IN.uv_MainTex.y };
+            float2 uv = { IN.uv_MainTex.x * _XScaler + _Time.x * _TimeScaler, IN.uv_MainTex.y };
             fixed4 c = tex2D (_MainTex, uv) * _Color;
             o.Albedo = c.rgb;
             // Metallic and smoothness come from slider variables

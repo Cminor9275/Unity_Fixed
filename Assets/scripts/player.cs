@@ -33,6 +33,15 @@ public class player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(Health > 100)
+        {
+            Health = 100;
+        }
+        if(Health <= 0)
+        {
+            Application.Quit();
+            
+        }
         
     }
 
@@ -55,6 +64,14 @@ public class player : MonoBehaviour
                 Vector3 aim_pt = new Vector3(hit_result.point.x, mesh_transform.position.y, hit_result.point.z);
                 mesh_transform.LookAt(aim_pt, Vector3.up);
             }
+        }
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.tag == "Robot")
+        {
+            print("robot hit");
+            Health -= 100;
         }
     }
 

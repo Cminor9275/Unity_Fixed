@@ -29,12 +29,12 @@ public class Enemy : MonoBehaviour
         if (distance <= 10)
         {
             mr.material = agro_mat;
-            print("changing material");
+            //print("changing material");
         }
         else
         {
             mr.material = normal_mat;
-            print("changing material");
+            //print("changing material");
         }
     }
 
