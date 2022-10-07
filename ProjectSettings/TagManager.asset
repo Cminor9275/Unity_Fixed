@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Enemy
   - Robot
+  - Spawner
   layers:
   - Default
   - TransparentFX

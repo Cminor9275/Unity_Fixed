@@ -21,6 +21,12 @@ public class player : MonoBehaviour
     Transform mesh_transform;
     Transform aim_transform;
 
+    float defense_timer = 0;
+
+    
+
+    
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -28,7 +34,10 @@ public class player : MonoBehaviour
         aim_transform = mesh_transform.Find("Aim_pt");
 
         main_cam = transform.Find("Main Camera").GetComponent<Camera>();
+        
+        
     }
+    
 
     // Update is called once per frame
     void Update()
@@ -42,6 +51,8 @@ public class player : MonoBehaviour
             Application.Quit();
             
         }
+        defense_timer -= Time.deltaTime;
+        //print(Health);
         
     }
 
@@ -72,6 +83,17 @@ public class player : MonoBehaviour
         {
             print("robot hit");
             Health -= 100;
+            
+        }
+        if (collision.gameObject.tag == "Enemy")
+        {
+            if (defense_timer <= 0)
+            {
+                Health -= 20;
+                
+            }
+            else
+                defense_timer = 3;
         }
     }
 
