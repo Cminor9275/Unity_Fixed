@@ -2,7 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
+
+[System.Serializable]
 public class player : MonoBehaviour
 {
 
@@ -23,12 +27,21 @@ public class player : MonoBehaviour
 
     float defense_timer = 0;
 
-    
+    public ParticleSystem muzzleflash;
 
-    
+    public GameObject healthbar;
+
+    public AudioSource fireSound;
+   
+
+
+
+        
 
     void Start()
     {
+        healthbar.GetComponent<FillBar>().SetMaxHealth(Health);
+        healthbar.GetComponent<FillBar>().SetHealth(Health);
         rb = GetComponent<Rigidbody>();
         mesh_transform = transform.Find("Player_mesh");
         aim_transform = mesh_transform.Find("Aim_pt");
@@ -48,8 +61,7 @@ public class player : MonoBehaviour
         }
         if(Health <= 0)
         {
-            Application.Quit();
-            
+            SceneManager.LoadScene("Main_menu");
         }
         defense_timer -= Time.deltaTime;
         //print(Health);
@@ -90,22 +102,32 @@ public class player : MonoBehaviour
             if (defense_timer <= 0)
             {
                 Health -= 20;
-                
+                healthbar.GetComponent<FillBar>().SetHealth(Health);
             }
             else
                 defense_timer = 3;
+        }
+        if (collision.gameObject.tag == "EndGame")
+        {
+            SceneManager.LoadScene("Main_menu");
         }
     }
 
     public void fire(InputAction.CallbackContext context)
     {
-        float value = context.ReadValue<float>();
-        if (value > 0.5f && context.performed)
+        if (!PauseMenu.isPaused)
         {
-            GameObject new_inst = GameObject.Instantiate(bullet_prefab);
-            new_inst.transform.position = aim_transform.position;
-            new_inst.transform.rotation = aim_transform.rotation;
+            float value = context.ReadValue<float>();
+            if (value > 0.5f && context.performed)
+            {
+                GameObject new_inst = GameObject.Instantiate(bullet_prefab);
+                new_inst.transform.position = aim_transform.position;
+                new_inst.transform.rotation = aim_transform.rotation;
+            }
+            muzzleflash.Play();
+            fireSound.Play();
         }
+        
     }
     public void move(InputAction.CallbackContext context)
     {
