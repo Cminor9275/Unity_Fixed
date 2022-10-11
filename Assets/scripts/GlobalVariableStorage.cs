@@ -7,6 +7,7 @@ public class GlobalVariableStorage : MonoBehaviour
 {
     public static int globalVariable;
     public static int Enemies_alive;
+    private float timer = 2;
 
     public AudioSource music;
     void Start()
@@ -19,7 +20,8 @@ public class GlobalVariableStorage : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Enemies_alive <= 0)
+        timer -= Time.deltaTime;
+        if(Enemies_alive <= 0 && timer <= 0)
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
